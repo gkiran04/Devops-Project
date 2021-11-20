@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openmrs-deployment
+  labels:
+    app: openmrs
+    ver: 1.0.0
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      app: myopenmrs
+      ver: 1.0.0
+  template:
+    metadata:
+      name: openmrs
+      labels:
+        app: myopenmrs
+        ver: 1.0.0
+    spec:
+      containers:
+        - name: openmrs
+          image: devops2021.azurecr.io/openmrs:2.0.0
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+          imagePullPolicy: Always
+          readinessProbe: 
+            initialDelaySeconds: 10 
+          livenessProbe:
+            httpGet:
+              path: /openmrs
+              port: 8080
+            initialDelaySeconds: 10  
+      imagePullSecrets:
+        - name: aks-secret          
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openmrs-service
+spec:
+  type: LoadBalencer
+  selector:
+    app: myopenmrs
+    ver: 1.0.0
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30004

@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: 
+  name: mysql
+  labels:
+    app: mydb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mydb
+      
+  serviceName: openmrs-service    
+  template:
+    metadata:
+      name: mysql
+      labels:
+        app: mydb
+ 
+    spec:
+      imagePullSecrets:
+        - name: aks-secret 
+      containers:
+        - name: mysql
+          image: devops2021.azurecr.io/mysql:8
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+          readinessProbe: 
+            initialDelaySeconds: 10
+          livenessProbe:
+            initialDelaySeconds: 10         
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_root_password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql_user_password
+          volumeMounts:
+            - name: my-pvc
+              mountPath: /var/lib/mysql    
+  volumeClaimTemplates:
+    - metadata:
+        name: my-pvc
+      spec:
+        storageClassName: default
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 300Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  type: ClusterIP
+  selector:
+    app: mydb
+    
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP

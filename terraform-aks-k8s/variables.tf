@@ -2,7 +2,7 @@ variable "client_id" {
     default = "c3749e62-c9a9-450e-be68-e2c6610af347"
 }
 variable "client_secret" {
-    default = "165497de-9d6d-4f3a-a19f-942f9fd145c2"
+    default = "b0d3d799-2a21-4cf1-ba30-3fb108d98466"
 }
 
 variable "agent_count" {
@@ -10,7 +10,7 @@ variable "agent_count" {
 }
 
 variable "ssh_public_key" {
-    default = "~/.ssh/id_rsa.pub"
+    default = "/var/lib/jenkins/.ssh/id_rsa.pub"
 }
 
 variable "dns_prefix" {

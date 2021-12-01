@@ -1,7 +1,7 @@
 resource "azurerm_kubernetes_cluster" "k8s" {
     name                = var.cluster_name
-    location            = azurerm_resource_group.location
-    resource_group_name = azurerm_resource_group.name
+    location            = azurerm_resource_group.kubernetes.location
+    resource_group_name = azurerm_resource_group.kubernetes.name
     dns_prefix          = var.dns_prefix
 
     linux_profile {

@@ -9,3 +9,7 @@ terraform {
 provider "azurerm" {
   features {}
 }
+resource "azurerm_resource_group" "kubernetes" {
+    name     = "akscluster"
+    location = "East US"
+}

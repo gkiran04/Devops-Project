@@ -1,8 +1,3 @@
-resource "azurerm_resource_group" "kubernetes" {
-    name     = "akscluster"
-    location = "East US"
-}
-
 resource "azurerm_kubernetes_cluster" "k8s" {
     name                = var.cluster_name
     location            = azurerm_resource_group.location

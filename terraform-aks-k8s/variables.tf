@@ -1,8 +1,8 @@
 variable "client_id" {
-    default = "c3749e62-c9a9-450e-be68-e2c6610af347"
+    default = ""
 }
 variable "client_secret" {
-    default = "b0d3d799-2a21-4cf1-ba30-3fb108d98466"
+    default = ""
 }
 
 variable "agent_count" {

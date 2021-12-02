@@ -38,6 +38,15 @@ pipeline{
                 
             }
         }
+
+        stage ('Terraform Validation'){
+            steps{
+                dir('terraform-aks-k8s') {
+                    sh 'terraform init'
+                    sh 'terraform validate'
+                }
+            }
+        }
     }
     
 

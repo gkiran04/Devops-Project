@@ -10,6 +10,6 @@ provider "azurerm" {
   features {}
 }
 resource "azurerm_resource_group" "kubernetes" {
-    name     = "akscluster"
+    name     = "aks-rg"
     location = "East US"
 }

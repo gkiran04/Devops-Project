@@ -10,7 +10,7 @@ variable "agent_count" {
 }
 
 variable "ssh_public_key" {
-    default = "/home/ubuntu/.ssh/id_rsa"
+    default = "~/.ssh/id_rsa.pub"
 }
 
 variable "dns_prefix" {

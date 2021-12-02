@@ -47,6 +47,15 @@ pipeline{
                 }
             }
         }
+
+        stage ('AKS Creation'){
+            steps{
+                dir('terraform-aks-k8s') {
+                    sh 'terraform plan'
+                    sh 'terraform apply --auto-approve'
+                }
+            }
+        }
     }
     
 

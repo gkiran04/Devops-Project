@@ -6,6 +6,10 @@ terraform {
       }
     }
 }
+
+provider "azurerm" {
+    features {}
+}
 resource "azurerm_resource_group" "kubernetes" {
     name     = "aks-rg"
     location = "East US"

@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: openmrs
-          image: devops2021.azurecr.io/openmrs:2.0.0
+          image: devops2021.azurecr.io/openmrs:v${BUILD_ID}
           ports:
             - containerPort: 8080
               protocol: TCP

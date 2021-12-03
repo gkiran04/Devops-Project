@@ -1,7 +1,5 @@
 pipeline{
-    agent{
-        label 'aksnode'
-    }
+    agent any
     environment{
         VERSION = "${env.BUILD_ID}"
     }

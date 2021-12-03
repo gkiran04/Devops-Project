@@ -29,12 +29,15 @@ pipeline{
                 ACR_REG= "devops2021.azurecr.io"
             }
             steps {
-                sh '''
+                withCredentials([string(credentialsId: 'ACR_PASSWORD', variable: 'ACR_PASSWORD')]) {
+                    sh '''
                     docker image build -t $ACR_REG/openmrs:v${VERSION} .
-                    az acr login --name devops2021
+                    echo ${ACR_PASSWORD} | docker login devops2021.azurecr.io -u devops2021 --password-stdin
                     docker push ${ACR_REG}/openmrs:v${VERSION}
                     docker rmi ${ACR_REG}/openmrs:v${VERSION}
-                '''
+                    '''
+                }
+                
                 
             }
         }

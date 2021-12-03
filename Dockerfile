@@ -7,6 +7,6 @@ RUN git clone https://github.com/wakaleo/game-of-life.git && \
 FROM tomcat:8
 LABEL author="kiran"
 RUN rm -rf /usr/local/tomcat/webapps/*
-COPY --from=build /openmrs-core/webapp/target/openmrs.war /usr/local/tomcat/webapps/openmrs.war
+COPY --from=build /game-of-life/gameoflife-web/target/gameoflife.war /usr/local/tomcat/webapps/gameoflife.war
 EXPOSE 8080
 CMD ["catalina.sh", "run"]

@@ -1,6 +1,6 @@
 FROM maven:3.8.3-jdk-8 as build
 LABEL author="kiran"
-RUN git clone https://github.com/gkiran04/Devops-Project.git && \
+RUN git clone https://github.com/wakaleo/game-of-life.git && \
     cd openmrs-core && \
     mvn clean install "-DskipTests"
 

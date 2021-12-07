@@ -23,7 +23,7 @@ spec:
         - name: aks-secret 
       containers:
         - name: mysql
-          image: mysql:8
+          image: devops2021.azurecr.io/mysql:5.6
           ports:
             - containerPort: 3306
               protocol: TCP

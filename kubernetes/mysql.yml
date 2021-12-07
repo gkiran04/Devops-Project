@@ -23,17 +23,17 @@ spec:
         - name: aks-secret 
       containers:
         - name: mysql
-          image: devops2021.azurecr.io/mysql:8
+          image: mysql:8
           ports:
             - containerPort: 3306
               protocol: TCP
           resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 250m
-            memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
           readinessProbe: 
             initialDelaySeconds: 10
           livenessProbe:

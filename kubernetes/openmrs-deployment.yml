@@ -26,17 +26,17 @@ spec:
     spec:
       containers:
         - name: openmrs
-          image: devops2021.azurecr.io/openmrs:v${Version}
+          image: devops2021.azurecr.io/openmrs:v16
           ports:
             - containerPort: 8080
               protocol: TCP
           resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 250m
-            memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
           imagePullPolicy: Always
           readinessProbe: 
             initialDelaySeconds: 10 

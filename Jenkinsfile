@@ -57,6 +57,26 @@ pipeline{
                 }
             }
         }
+
+        stage('AKS Test'){
+            steps{
+                sh '''
+                sudo az aks install-cli
+                az aks get-credentials --resource-group aks-rg --name akstest
+                kubectl get nodes
+                '''
+                }
+                             
+            }
+        }
+
+        stage('OpenMRS Deployment'){
+            steps{
+                dir('kubernetes') {
+                    sh 'kubectl apply -f .'
+                }
+            }
+        }
     }
     
 

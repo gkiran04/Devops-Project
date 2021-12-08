@@ -62,7 +62,7 @@ pipeline{
             steps{
                 sh '''
                 sudo az aks install-cli
-                az aks get-credentials --resource-group aks-rg --name akstest
+                az aks get-credentials --resource-group aks-rg --name akstest --overwrite-existing
                 kubectl get nodes
                 '''
                 }

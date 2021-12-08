@@ -1,0 +1,56 @@
+pipeline{
+
+    agent any
+    
+    environment{
+        VERSION = "${env.BUILD_ID}"
+    }
+    stages{
+        stage('Source Code') {
+            steps{
+                git branch: 'main', url: 'https://github.com/gkiran04/Devops-Project.git'
+                
+            }
+        }
+
+        stage('BUILD & PUSH IMAGE'){
+            environment{
+                ACR_REG= "devops2021.azurecr.io"
+            }
+            steps {
+                withCredentials([string(credentialsId: 'ACR_PASSWORD', variable: 'ACR_PASSWORD')]) {
+                    sh '''
+                    docker image build -t $ACR_REG/openmrs:v${VERSION} .
+                    echo ${ACR_PASSWORD} | docker login devops2021.azurecr.io -u devops2021 --password-stdin
+                    docker push ${ACR_REG}/openmrs:v${VERSION}
+                    docker rmi ${ACR_REG}/openmrs:v${VERSION}
+                    '''
+                }
+                
+                
+            }
+        }
+
+        stage('AKS Test'){
+            steps{
+                sh '''
+                sudo az aks install-cli
+                az aks get-credentials --resource-group aks-rg --name akstest
+                kubectl get nodes
+                '''
+                }
+                             
+            }
+        }
+
+        stage('OpenMRS Deployment'){
+            steps{
+                dir('kubernetes') {
+                    sh 'kubectl apply -f .'
+                }
+            }
+        }
+
+	    
+    }
+}
